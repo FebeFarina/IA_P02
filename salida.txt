@@ -1,10 +1,6 @@
-O*********
-O*********
-O*********
-O*********
-O*********
-OO********
-*OOOO*****
-****OOOO**
-*******OO*
-********OO
+Rejilla Nodo inicial Nodo final  Nodos A Manhattan Nodos G Manhattan Nodos A Euclidea  Nodos G Euclidea  
+1       (1  , 1  )   (2  , 2  )  2                 5                 2                 5                 
+2       (1  , 1  )   (10 , 5  )  13                37                13                42                
+3       (1  , 1  )   (5  , 5  )  8                 26                8                 28                
+4       (3  , 2  )   (5  , 4  )  4                 16                4                 16                
+5       (1  , 1  )   (10 , 10 )  18                52                18                64                

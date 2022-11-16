@@ -38,7 +38,7 @@ void Grid::Print(std::string filename, Node node) {
     output << std::endl;
   }
   output << "X: " << node.GetX() + 1 << " Y: " << node.GetY() + 1 << std::endl;
-  output << "Nodos generados: "<<nodos_generados - 1<<std::endl;
+  output << "Nodos generados: "<<nodos_generados<<std::endl;
   output << "Nodos analizados: "<<nodos_analizados + 1 <<std::endl;
 }
 
@@ -49,7 +49,10 @@ void Grid::PrintWhole(std::string filename) {
       output << grid_[i][j];
     }
     output << std::endl;
+    
   }
+  output << "Nodos generados: "<<nodos_generados<<std::endl;
+  output << "Nodos analizados: "<<nodos_analizados + 1 <<std::endl;
 }
 
 void Grid::Recorrido(int initial_x, int initial_y, int final_x, int final_y) {
@@ -109,6 +112,7 @@ void Grid::AStar(bool fast_mode) {
                 Node aux(node.GetX() + i, node.GetY() + j, &node, heuristica_);
                 frontier.push_back(aux);
                 ++nodos_generados;
+                
               }
           }
         }

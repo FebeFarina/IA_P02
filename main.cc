@@ -91,6 +91,23 @@ int main()
     }
     else if (opcion == 2)
     {
+      system("clear");
+      std::cout<<"se van a generar 5 tablas para comparar sus recorridos.\n"
+      <<"¿quiere generar 5 tablas con valores aleatorios o desea introducirlos manualmente?\n"
+      <<"1. Aleatorio\n"
+      <<"2. Manual"<<std::endl;
+      int random_option;
+      std::cin >> random_option;
+      bool random = true;
+      if (random_option == 1)
+      {
+        random = true;
+      }
+      else
+      {
+        random = false;
+      }
+      if(random == true){
       srand(time(NULL));
       std::vector<int> result;
       int generados1{0}, generados2{0}, analizados1{0}, analizados2{0};
@@ -98,10 +115,10 @@ int main()
       output << std::left << std::setw(8) << "Rejilla";
       output << std::left << std::setw(13) << "Nodo inicial";
       output << std::left << std::setw(12) << "Nodo final";
-      output << std::left << std::setw(30) << "Nodos analizados en Manhattan";
-      output << std::left << std::setw(30) << "Nodos generados en Manhattan";
-      output << std::left << std::setw(30) << "Nodos analizados en Euclidea";
-      output << std::left << std::setw(30) << "Nodos generados en Euclidea" << std::endl;
+      output << std::left << std::setw(18) << "Nodos A Manhattan";
+      output << std::left << std::setw(18) << "Nodos G Manhattan";
+      output << std::left << std::setw(18) << "Nodos A Euclidea";
+      output << std::left << std::setw(18) << "Nodos G Euclidea" << std::endl;
       for (int i{0}; i < 5; ++i)
       {
         int random_x_initial = rand() % 100 + 1;
@@ -111,7 +128,7 @@ int main()
         Node::SetFinal(random_x_final, random_y_final);
         Grid grid(100, 100, random_x_initial, random_y_initial, random_x_final,
                   random_y_final, true);
-        std::cout << random_x_initial << " " << random_y_initial << " " << random_x_final << " " << random_y_final << std::endl;
+        //std::cout << random_x_initial << " " << random_y_initial << " " << random_x_final << " " << random_y_final << std::endl;
         grid.AStar(false);
         analizados1 = grid.GetNodosAnalizados();
         generados1 = grid.GetNodosGenerados();
@@ -122,16 +139,67 @@ int main()
         generados2 = grid.GetNodosGenerados();
 
         output << std::left << std::setw(8) << i + 1;
-        output << std::left << std::setw(1) << "(" << std::setw(3) << random_x_initial << std::setw(2) << ", " << std::setw(3) << random_y_initial << std::setw(4) << ")";
-        output << std::left << std::setw(1) << "(" << std::setw(3) << random_x_final << std::setw(2) << ", " << std::setw(3) << random_y_final << std::setw(3) << ")";
-        output << std::left << std::setw(30) << analizados1;
-        output << std::left << std::setw(30) << generados1;
-        output << std::left << std::setw(30) << analizados2;
-        output << std::left << std::setw(30) << generados2 << std::endl;
+        output << std::left << std::setw(1) << "(" << std::setw(3) << random_y_initial << std::setw(2) << ", " << std::setw(3) << random_x_initial << std::setw(4) << ")";
+        output << std::left << std::setw(1) << "(" << std::setw(3) << random_y_final << std::setw(2) << ", " << std::setw(3) << random_x_final << std::setw(3) << ")";
+        output << std::left << std::setw(18) << analizados1+1;
+        output << std::left << std::setw(18) << generados1;
+        output << std::left << std::setw(18) << analizados2+1;
+        output << std::left << std::setw(18) << generados2 << std::endl;
       }
       std::cout << "Tabla de resultados en salida.txt. Pulse enter para continuar...";
       std::cin.ignore();
       std::cin.get();
+      }
+      else{
+      std::vector<int> result;
+      int generados1{0}, generados2{0}, analizados1{0}, analizados2{0};
+      std::ofstream output("salida.txt");
+      output << std::left << std::setw(8) << "Rejilla";
+      output << std::left << std::setw(13) << "Nodo inicial";
+      output << std::left << std::setw(12) << "Nodo final";
+      output << std::left << std::setw(18) << "Nodos A Manhattan";
+      output << std::left << std::setw(18) << "Nodos G Manhattan";
+      output << std::left << std::setw(18) << "Nodos A Euclidea";
+      output << std::left << std::setw(18) << "Nodos G Euclidea" << std::endl;
+      for (int i{0}; i < 5; ++i)
+      {       
+        system("clear");
+        std::cout << "Introduzca el tamaño de la cuadrícula (x, y): ";
+        int size_x, size_y;
+      std::cin >> size_x >> size_y;
+        std::cout<<"introduzca la posicion inicial (x,y)"<<std::endl;
+        int random_x_initial;
+        int random_y_initial;
+        std::cin >> random_y_initial >> random_x_initial;
+        std::cout<<"introduzca la posicion final (x,y)"<<std::endl;
+        int random_x_final;
+        int random_y_final;
+        std::cin >> random_y_final >> random_x_final;
+        Node::SetFinal(random_x_final, random_y_final);
+        Grid grid(size_x, size_y, random_x_initial, random_y_initial, random_x_final,
+                  random_y_final, true);
+        //std::cout << random_x_initial << " " << random_y_initial << " " << random_x_final << " " << random_y_final << std::endl;
+        grid.AStar(false);
+        analizados1 = grid.GetNodosAnalizados();
+        generados1 = grid.GetNodosGenerados();
+        grid.SwitchHeuristic();
+        grid.ResetNodes();
+        grid.AStar(false);
+        analizados2 = grid.GetNodosAnalizados();
+        generados2 = grid.GetNodosGenerados();
+
+        output << std::left << std::setw(8) << i + 1;
+        output << std::left << std::setw(1) << "(" << std::setw(3) << random_y_initial << std::setw(2) << ", " << std::setw(3) << random_x_initial << std::setw(4) << ")";
+        output << std::left << std::setw(1) << "(" << std::setw(3) << random_y_final << std::setw(2) << ", " << std::setw(3) << random_x_final << std::setw(3) << ")";
+        output << std::left << std::setw(18) << analizados1;
+        output << std::left << std::setw(18) << generados1;
+        output << std::left << std::setw(18) << analizados2;
+        output << std::left << std::setw(18) << generados2 << std::endl;
+      }
+      std::cout << "Tabla de resultados en salida.txt. Pulse enter para continuar...";
+      std::cin.ignore();
+      std::cin.get();
+      }
     }
   }
 }
